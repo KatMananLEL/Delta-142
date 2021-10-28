@@ -7,7 +7,10 @@ const settingsSchema = new mongoose.Schema({
     mute_role:{type:String},
     quarantine_role:{type:String},
     anti_raid_enable:{type:Boolean},
-    anti_nuke_enable:{type:Boolean}
+    anti_nuke_enable:{type:Boolean},
+    log_enabled:{type:Boolean},
+    msg_log:{type:Boolean},
+    kick_ban_log:{type:Boolean}
 })
 
 const settingsModel = mongoose.model('settingsSchema', settingsSchema);
