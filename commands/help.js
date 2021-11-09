@@ -6,9 +6,10 @@ module.exports = {
     name:'help',
     description:`Sends Help embed with formats of command`,
     cooldown:3,
-    format:`{prefix}help (Optional Command here)`
+    format:`{prefix}help (Optional Command here)`,
+    owner:false
 }
-module.exports.run = async(client, message, args) => {
+module.exports.run = async(client, message, args, errorchannel) => {
     const randomNumber = message.id
     const closeactionrow = new MessageActionRow()
     .addComponents(closebutton.setCustomId(`close_${message.author.id}_${randomNumber}`))

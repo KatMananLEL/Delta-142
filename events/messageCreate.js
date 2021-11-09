@@ -4,7 +4,7 @@ const emojis = require(`../aesthetics/emoji.json`)
 const registerguild = require('../modules/registerguild.js')
 const Discord = require('discord.js');
 module.exports = async (client, message) => {
-    if (!message.guild) return // Message in DM's were not ignored kek
+    if (!message.guild || message.author.bot || message.channel.isThread()) return // Message in DM's were not ignored kek
     if (blacklist.get(`${message.guild.id}_GUILD`) == true) return // Blacklisting Guilds be like
     if (blacklist.get(`${message.author.id}_MEMBER`) == true) return // Blacklisting Users be like
 
@@ -15,11 +15,12 @@ module.exports = async (client, message) => {
     }
 
     const prefix = guildsettings.prefix
-    if (!message.content.startsWith(prefix) || message.author.bot) return; // Not gonna waste time of my bot
+    if (!message.content.startsWith(prefix)) return; // Not gonna waste time of my bot
     const args = message.content.slice(prefix.length).split(/ +/);
     const commandname = args.shift().toLowerCase();
     const cooldowns = new Map();
     const command = client.commands.get(commandname) || client.commands.find(file => file.aka && file.aka.includes(commandname))
+    const errorchannel = client.channels.cache.get(setup.get('ERROR_LOGS'))
     const notfoundembed = new Discord.MessageEmbed()
         .setColor('RED')
         .setAuthor(`${message.author.tag}`, `${message.author.displayAvatarURL({ dynamic: true })}`)
@@ -62,7 +63,7 @@ module.exports = async (client, message) => {
         if (!message.member.permissions.has('MANAGE_GUILD')) return
     }
     try {
-        command.run(client, message, args)
+        command.run(client, message, args, errorchannel)
     } catch (err) {
         const errorembed = new Discord.MessageEmbed()
             .setColor('RED')
@@ -72,6 +73,6 @@ module.exports = async (client, message) => {
             .setFooter(`${client.user.username}`, `${client.user.displayAvatarURL({ dynamic: true })}`)
             .setTimestamp()
         message.reply({ embeds: errorembed });
-        client.channels.cache.get(setup.get('ERROR_LOGS')).send(`Error:\n` + `\`${err}\``)
+        errorchannel.send(`Error:\n` + `\`${err}\``)
     }
 }
