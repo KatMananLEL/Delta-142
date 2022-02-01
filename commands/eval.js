@@ -1,8 +1,8 @@
 const { MessageEmbed } = require('discord.js');
-const {inspect} = require('util')
-const emojixd = require(`../aesthetics/emoji.json`)
-const {setup, blacklist, owner} = require('../database/quick-db.js')
-const settingsSchema = require('../database/models/settingsSchema.js')
+const {inspect} = require('util');
+const emojixd = require(`../assets/emoji.json`);
+const {blacklist, owner} = require('../database/quick-db.js');
+const settingsSchema = require('../database/models/settingsSchema.js');
 module.exports = {
     name: 'eval',
     description: 'Evalutes things xd',

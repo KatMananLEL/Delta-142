@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js")
-const emojisxd = require(`../aesthetics/emoji.json`)
+const emojisxd = require(`../assets/emoji.json`)
 module.exports = {
     name:'reload',
     descriptions:'Reloads a command',
